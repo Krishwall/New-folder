@@ -90,13 +90,13 @@ continents=df['continent'].unique().tolist()
 cdf=df.groupby('continent')[years].sum() 
 cdf['total']=cdf.sum(axis=1)
 
-#c1.dataframe(cdf,use_container_width=True)
+c1.dataframe(cdf,use_container_width=True)
 figContinent=px.pie(cdf,names=cdf.index,values='total',
                     title='Continent Wise Immigration',
                     hole=.5,
                     height=700)
 
-c1.plotly_chart(figContinent,use_container_width=True,)
+c3.plotly_chart(figContinent,use_container_width=True,)
 #mapContinent= px.scatter_geo(df,locations='continent')
 
 figMap=px.choropleth(df,
