@@ -26,12 +26,18 @@ def load_data():
     df.columns = [str(name).lower() for name in df.columns.tolist()]
     df['total'] = df[years].sum(axis=1)
     df=df.sort_values(by='total',ascending=False)
+    # renaming countries
+    df = df.rename(index={'United Kingdom of Great Britain and Northern Ireland': 'UK'})
+    df = df.rename(index={'Iran (Islamic Republic of)': 'Iran'})
+    df = df.rename(index={'United States of America': 'USA'})
+
     return df
 # configure the layout
 st.set_page_config(
     layout='wide',
     page_title='Immigration Data Analysis',
-    page_icon="📊"
+    page_icon="📊",
+    initial_sidebar_state="collapsed"
 )
 #loading the data
 with st.spinner(" Loading Data..."):
@@ -40,7 +46,7 @@ with st.spinner(" Loading Data..."):
     st.sidebar.success("Data Loaded successfully")
 # creating the UI interface
 c1,c2,c3=st.columns([2,1,1])
-c1.title("Immigration Analysis")
+c1.title("Canada Immigration Analysis")
 c2.header("Summary of data")
 total_rows=df.shape[0]
 total_cols=df.shape[1]
@@ -78,8 +84,8 @@ c1,c2=st.columns(2)
 c1.plotly_chart(fig2,use_container_width=True)
 c2.plotly_chart(figtop10,use_container_width=True)
 
-st.header("continent wise analysis")
-c1,c2,c3=st.columns(3)
+st.header("Continent Wise Analysis")
+c1,c2=st.columns(2)
 continents=df['continent'].unique().tolist()
 cdf=df.groupby('continent')[years].sum() 
 cdf['total']=cdf.sum(axis=1)
@@ -99,6 +105,6 @@ figMap=px.choropleth(df,
                      color='total',
                      title='World Map',
                      projection='natural earth',
-                     width=1000, height=700,
+                     width=1200, height=800,
                      template='plotly_dark',)
 st.plotly_chart(figMap,use_container_width=True)
