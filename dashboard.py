@@ -96,7 +96,7 @@ figContinent=px.pie(cdf,names=cdf.index,values='total',
                     hole=.5,
                     height=700)
 
-c3.plotly_chart(figContinent,use_container_width=True,)
+c1.plotly_chart(figContinent,use_container_width=True,)
 #mapContinent= px.scatter_geo(df,locations='continent')
 
 figMap=px.choropleth(df,
